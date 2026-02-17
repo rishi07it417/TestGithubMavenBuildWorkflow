@@ -47,22 +47,6 @@ jobs:
           java-version: ${{ inputs.java-version }}
           cache: maven
 
-      - name: Configure Maven settings (if credentials provided)
-        if: ${{ secrets.MAVEN_USERNAME != '' }}
-        run: |
-          mkdir -p ~/.m2
-          cat > ~/.m2/settings.xml <<EOF
-          <settings>
-            <servers>
-              <server>
-                <id>private-repo</id>
-                <username>${{ secrets.MAVEN_USERNAME }}</username>
-                <password>${{ secrets.MAVEN_PASSWORD }}</password>
-              </server>
-            </servers>
-          </settings>
-          EOF
-
       - name: Build with Maven
         run: mvn ${{ inputs.maven-args }}
 
